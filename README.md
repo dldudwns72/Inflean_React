@@ -1,1 +1,3 @@
-# Inflean_React
+# React란 무엇인가?
+
+1. 자동으로 업데이트 되는 UI
