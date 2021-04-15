@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ColorComponent from "./Color";
+import Counter from './Counter';
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);
@@ -20,23 +22,35 @@ export default function App() {
 
   return (
     <div>
-      <h3>할 일 목록</h3>
-      <ul>
-        {todoList
-          .filter((_, index) => (showOdd ? index % 2 === 0 : true))
-          .map((todo) => (
-            <li key={todo.id}>
-              <span>{todo.desc}</span>
-              <button data-id={todo.id} onClick={onDelete}>
-                삭제
-              </button>
-            </li>
-          ))}
-      </ul>
-      <input type='text' value={""} onChange={(e) => setDesc(e.target.value)} />
-      <button onClick={onAdd}>추가</button>
-      <button onClick={() => setShowOdd(!showOdd)}>홀수 아이템만 보기</button>
-      <button onClick={onSaveToServer()}>서버에 저장</button>
+      <div>
+        <h3>할 일 목록</h3>
+        <ul>
+          {todoList
+            .filter((_, index) => (showOdd ? index % 2 === 0 : true))
+            .map((todo) => (
+              <li key={todo.id}>
+                <span>{todo.desc}</span>
+                <button data-id={todo.id} onClick={onDelete}>
+                  삭제
+                </button>
+              </li>
+            ))}
+        </ul>
+        <input type='text' value={""} onChange={(e) => setDesc(e.target.value)} />
+        <button onClick={onAdd}>추가</button>
+        <button onClick={() => setShowOdd(!showOdd)}>홀수 아이템만 보기</button>
+        <button onClick={onSaveToServer()}>서버에 저장</button>
+      </div>
+
+      <div>
+        <ColorComponent />
+      </div>
+
+      <div>
+         {/* 같은 Counter 컴포넌트가 사용되지만 각 컴포넌트의 상태값은 다르다 */}
+        <Counter/>
+        <Counter/>
+      </div>
     </div>
   );
 }
