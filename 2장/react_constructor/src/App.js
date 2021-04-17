@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import ReactDom from "react-dom";
 import ColorComponent from "./Color";
-import Counter from './Counter';
+import Counter from "./Counter";
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);
@@ -47,10 +48,18 @@ export default function App() {
       </div>
 
       <div>
-         {/* 같은 Counter 컴포넌트가 사용되지만 각 컴포넌트의 상태값은 다르다 */}
-        <Counter/>
-        <Counter/>
+        {/* 같은 Counter 컴포넌트가 사용되지만 각 컴포넌트의 상태값은 다르다 */}
+        <Counter />
+        <Counter />
       </div>
+
+      {/* id root 이외의 영역에 생성하기,createPortal은 보통 모달으리 위해 사용됨 */}
+      {ReactDom.createPortal(
+        <div>
+          <p>CreatePortal</p>
+        </div>,
+        document.getElementById("somthing")
+      )}
     </div>
   );
 }
