@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-
+import useUser from './useUser'
 const useEffectHooks = ({userId}) => {
-  const [user, setUser] = useState(null);
-
-  useEffect(()=>{
-      getUserApi(userId).then(data => setUser(data))
-  },[userId])
+  const user = useUser(userId)
   
   return (
     <div>
@@ -20,14 +16,6 @@ const useEffectHooks = ({userId}) => {
   );
 };
 
-const USER1 = { name: "mike", age: 23 };
-const USER2 = { name: "jane", age: 31 };
-function getUserApi(userId) {
-  return new Promise((res) => {
-    setTimeout(() => {
-      res(userID % 2 ? USER1 : USER2);
-    }, 500);
-  });
-}
+
 
 export default useEffectHooks;
