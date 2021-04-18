@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDom from "react-dom";
 import ColorComponent from "./Color";
 import Counter from "./Counter";
+import ReactHooks from "./ReactHooks";
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);
@@ -53,13 +54,19 @@ export default function App() {
         <Counter />
       </div>
 
-      {/* id root 이외의 영역에 생성하기,createPortal은 보통 모달으리 위해 사용됨 */}
+      {/* id root 이외의 영역에 생성하기,createPortal은 보통 모달 위해 사용됨 */}
+      {/* 소스 상에서는 하위 코드가 ReactHooks 컴포넌트 보다 위에 있지만 index.html에서 id 가 somthing 인 div태그가 root 태그 보다 밑에 있음으로 화면상에서는 ReactHooks가 더 위로 오게 된다. */}
       {ReactDom.createPortal(
         <div>
           <p>CreatePortal</p>
         </div>,
         document.getElementById("somthing")
       )}
+
+      <ReactHooks/>
+
+
+
     </div>
   );
 }
