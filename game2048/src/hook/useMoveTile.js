@@ -1,30 +1,43 @@
-import { useEffect } from "react";
-import { addKeyObserver,removeKeyCallback } from "../util/keyboard";
+import { useEffect } from 'react';
+import { makeTile, moveTile } from '../util/tile';
+import { addKeyObserver, removeKeyCallback } from '../util/keyboard';
 
-export default function useMoveTile(tileList,setTileList) {
-  function moveAndAdd({x, y}) {}
-
-  function moveUP() {
-    moveAndAdd({ x: 0, y: 1 });
-  }
-
-  function moveDown() {}
-
-  function moveLeft() {}
-
-  function moveRight() {}
-
+export default function useMoveTile({ tileList, setTileList, setScore }) {
   useEffect(() => {
-    addKeyObserver("up", moveUP);
-    addKeyObserver("down", moveDown);
-    addKeyObserver("left", moveLeft);
-    addKeyObserver("right", moveRight);
+    function moveAndAdd({ x, y }) {
+      const newTileList = moveTile({ tileList, x, y });
+      const score = newTileList.reduce(
+        (acc, item) => (item.isMerged ? acc + item.value : acc),
+        0,
+      );
+      setScore(v => v + score);
+      const newTile = makeTile(newTileList);
+      newTile.isNew = true;
+      newTileList.push(newTile);
+      setTileList(newTileList);
+    }
 
+    function moveUp() {
+      moveAndAdd({ x: 0, y: -1 });
+    }
+    function moveDown() {
+      moveAndAdd({ x: 0, y: 1 });
+    }
+    function moveLeft() {
+      moveAndAdd({ x: -1, y: 0 });
+    }
+    function moveRight() {
+      moveAndAdd({ x: 1, y: 0 });
+    }
+    addKeyObserver('up', moveUp);
+    addKeyObserver('down', moveDown);
+    addKeyObserver('left', moveLeft);
+    addKeyObserver('right', moveRight);
     return () => {
-        removeKeyCallback("up", moveUP);
-        removeKeyCallback("down", moveDown);
-        removeKeyCallback("left", moveLeft);
-        removeKeyCallback("right", moveRight);
+      removeKeyCallback('up', moveUp);
+      removeKeyCallback('down', moveDown);
+      removeKeyCallback('left', moveLeft);
+      removeKeyCallback('right', moveRight);
     };
-  });
+  }, [tileList, setTileList, setScore]);
 }

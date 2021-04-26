@@ -13,7 +13,6 @@ export function getInitialTileList() {
 function checkCollision(tileList, newTile) {
   return tileList.some(tile => tile.x === newTile.x && tile.y === newTile.y);
 }
-
 let currentId = 0;
 export function makeTile(tileList) {
   let newTile;
