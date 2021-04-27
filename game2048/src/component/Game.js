@@ -9,7 +9,6 @@ export default function Game({ setScore }) {
   const [tileList, setTileList] = useState(getInitialTileList);
 
   useMoveTile({ tileList, setTileList, setScore });
-  
 
   return (
     <div className='game-container'>
