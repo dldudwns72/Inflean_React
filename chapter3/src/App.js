@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useContext, useState } from "react";
 
-function App() {
+const ThemeContext = createContext("dark");
+const UserContext = createContext("unknown");
+
+export default function App() {
+  const [name, setName] = useState("JUN");
+  const [color ,setColor] = useState(["blue","red"])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ThemeContext.Provider value={color}>
+        <UserContext.Provider value={name}>
+          <div>상단 메뉴</div>
+          <Profile />
+          <div>하단 메뉴</div>
+          <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+        </UserContext.Provider>
+      </ThemeContext.Provider>
     </div>
   );
 }
 
-export default App;
+const Profile = React.memo(function () {
+  return (
+    <div>
+      <Gretting />
+    </div>
+  );
+});
+
+function Gretting() {
+  const theme = useContext(ThemeContext);
+  const username = useContext(UserContext);
+  return (
+    <div>
+      <p>{`${username} 님 안녕하세요`}</p>
+      <select>
+          {
+            theme.map((color,index)=>{
+              return (
+                <option key = {index} value = {color}>{`${color} 색상`}</option>
+              )
+            })
+          }
+      </select>
+    </div>
+    // createContext를 이용하여 생성했을 경우
+    // <UserContext.Consumer>
+    //   {username =><p>{`${username}님 안녕하세요`}</p>}
+    // </UserContext.Consumer>
+  );
+}

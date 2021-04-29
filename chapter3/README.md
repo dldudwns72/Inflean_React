@@ -14,3 +14,6 @@ const Provider변수명 = createContext("초기값")
 ```
 
 Provider의 value가 변경 되면 하위의 모든 Consumer 컴포넌트는 다시 랜더링이 된다
+
+Provider와 Consumer 사이의 컴포넌트 중 변경사항이 없으면 렌더링을 하지 않게 하려면 React.memo를 사용하여 불필요한 메모리 사용 해제
+여러개의 Provider를 사용할 수 있다.
