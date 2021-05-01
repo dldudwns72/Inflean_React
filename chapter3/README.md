@@ -42,4 +42,10 @@ ref로 사용시 해당 컴포넌트 선언시 forwardRef를 사용하여 ref를
 ```
 
 # useRef(초기값)
- - 요소의 레퍼런스를 저장하기 위해 사용함, ref 사용의 Hooks 화
+ - 요소의 레퍼런스를 저장하기 위해 사용함, ref 사용의 Hooks화
+
+# useMemo
+
+# useCallBack
+
+# useReducer
