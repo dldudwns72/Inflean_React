@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AppObject from './AppObject';
+import CustomRef from './CustomRef';
 import App from './AppObject';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
     <AppObject />
+    4-----------------------------------------------------
+    CustomRef
+    <CustomRef/>
   </React.StrictMode>,
   document.getElementById('root')
 );
