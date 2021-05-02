@@ -43,9 +43,97 @@ ref로 사용시 해당 컴포넌트 선언시 forwardRef를 사용하여 ref를
 
 # useRef(초기값)
  - 요소의 레퍼런스를 저장하기 위해 사용함, ref 사용의 Hooks화
+ - 렌더링과 사용없는 값을 사용하기 위해 용이
+ ```
+    
+ ```
 
 # useMemo
-
+ - 계산량이 많은 함수의 반환값을 재활용 하기 위해 사용됨
+ - 의존성 배열안에 담겨있는 값이 변경이 되지 않으면 리액트에서 함수 반환값을 기억하여 재 계산하지 않고 사용함
+ ```
+ const value = useMemo(()=> 함수명(v1,v2),[v1,v2]) // 두번째 인자는 의존성 배열 
+ ```
 # useCallBack
+- 함수를 컴포넌트에 할당할 시 값이 변경되지 않아도 새로운 함수가 생성되어 하위 컴포넌트가 불필요하게 재랜더링이 되는것을 방지
+```
+    const onSave = useCallback(()=> 함수명(v1,v2),[v1,v2]) // 두번째 인자는 의존성 배열
+```
 
 # useReducer
+- 여러개의 상태값을 변경해야할때 유용
+```
+const [state,dispatch] = useReducer(reducer, 초기값);
+// dispatch는 상태값을 변경을 전달해줄 함수, // reducer은 상태값을 전달받아 변경해줄 함수
+function reducer(state,action){
+    switch(action.type){
+        case : '액션타입명'
+            return {...state, 액션변수: action.액션변수 }
+    }
+}
+
+onChange = {e => dispatch({type : '액션타입' , name : e.target.value})}
+```
+
+```
+ 떨어져있는 컴포넌트에게 useReducer를 활용하여 변수 변경하기
+ const ProfileDispatch = React.createContext(null);
+    function reducer(state,action){
+        switch(action.type){
+            case : '액션타입명'
+                return {...state, 액션변수: action.액션변수 };
+            case : 'setName'
+                return {...state, name : action.name}
+        }
+    }
+ const [state,dispatch] = useReducer(reducer, 초기값);
+ <ProfileDispatch.Provider value={dispatch}>
+    하위 컴포넌트
+ </ProfileDispatch.Provider>
+
+ const 하위 컴포넌트 = () =>{
+     return(
+         <input type = "text onChange = {e=>dispatch({type:setName,name : e.target.name})}/>
+     )
+ }
+
+```
+
+# useImperativeHandle
+ - 하위 컴포넌트에서 생성한 함수 및 값을 부모 컴포넌트에서 사용할 수 있다.
+```
+ const profileRef = uesRef();
+ profileRef.current.getNameLength()  
+ profileRef.current.addAge(5) 
+
+ <하위컴포넌트 ref ={profileRef}>
+-----------------------------------------------------------
+하위 컴포넌트(_,ref){
+    useImperativeHandle(ref,() =>{
+        addAge : value => setAge(age + value)
+        getNameLength : () => name.length
+    })
+}
+
+```
+
+# useLayoutEffect
+ - useEffect는 비동기적으로 렌더링 결과가 반영이 안되도 호출하고, useLayoutEffect는 렌더링 결과가 돔에 반영된 직후에 동기적으로 바로 호출됨
+ - 연산이 많이 필요한 경우는 사용하지말것, 성능상으로는 useEffect가 효율적
+ ```
+  useLayoutEffect(()=>{
+       실행할 함수
+  },[의존성 배열])
+ ```
+
+# useDebugValue
+ - 개발자도구 React 버전을 사용할 떄 state값을 명확하게 표시하기 위해 사용
+ ```
+    useDebugValue(
+        state === STATE_START
+        ? 'start'
+        : state === STATE_RUNNING
+        ? 'running'
+        : 'stop'
+    )
+ ```
