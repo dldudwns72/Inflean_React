@@ -28,12 +28,13 @@ Provider와 Consumer 사이의 컴포넌트 중 변경사항이 없으면 렌더
 # forwardRef(메소드,매개변수)
 - 컴포넌트에서 "ref" 선언 시 다른 ref 와 겹쳐 사용할 수 없어 이름을 변경 해 주어야 하는데 변경하지않고
 ref로 사용시 해당 컴포넌트 선언시 forwardRef를 사용하여 ref를 구분지어 사용할 수 있다.
-```
+
+```javascript
     EX)
     <Button ref = {buttonRef}>
 
     const Button = React.forwardRef(function ({onClick},ref)){
-        reutnr(
+        return(
             <button onClick = {onClick} ref = {ref}>
             저장
             </button>
