@@ -79,3 +79,17 @@ const fetchAndSetUser = useCallback(
    fetchAndSetUser(false);
 },[fetchAndSetUser])
 ```
+
+# 렌더링 속도를 올리기 위한 성능 최적화 방법
+1. 상태 객체를 불변 객체로 관리해라
+2. 객체 추가 시 객체를 복사해서 넣어라
+```javascript
+const [fruits,setFruits] = useState(['apple','banana','orange'])
+const [newFruit,setNewFruit] = useState('');
+function addNewFruit(){
+  // fruits.push(newFruit); 상태 변화는 무조건 useState안에서 해야함
+  setFruits([...fruits,newFruit]) // frutis의 레퍼런스가 변경되어야함
+}
+```
+3. 배열을 사용할 경우 원소마다 key값을 주어 순서정보를 입력해라
+
