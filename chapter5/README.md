@@ -73,10 +73,12 @@ const store = createStore(reducer);
 ```javascript
 import { Provider,useSelecto,shallEqual,useDispatch } from "react-redux";
 
+return(
   <Provider store ={store}> // 루트 컴포넌트에서 Provider 선언
     <FisrtComponent>
     <SecondComponent>
   </Provider>
+)
 
   const FirstComponent = () =>{
     const data = useSelector(state => state.값) // 해당 반환값이 리듀서의 반환값
