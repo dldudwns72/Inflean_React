@@ -87,3 +87,16 @@ return(
   const dispatch = useDispatch  
   store.dispatch(reducer) -> useDispatch(reducer)
 ```
+
+# 리덕스에서 비동기 처리하기
+1. redux-thunk
+  - 비동기 로직이 간단할 때 사용 
+  - 간단한 시작
+2. redux-observable
+ - 비동기 코드가 많을 때 사용
+ - RxJs패키지 기반, 고난이도
+3. reudx-saga
+ - 비동기 코드가 많을 때 사용
+ - 제너레이터 활용
+ - 테스트코드 작성 용이
+
