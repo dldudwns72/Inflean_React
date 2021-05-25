@@ -100,6 +100,24 @@ return(
  - 제너레이터 활용
  - 테스트코드 작성 용이
 
+ # 제너레이터(Generator)
+  - 제너레이터 함수를 호출하면 제너레이터 객체가 반환된다. 
+  - next() : return {value : 값, done : false}
+  - yield 호출 시 멈췄다가 next 호출 시 다시 진행된다.
+  ```javascript
+   function* f1(){
+     console.log('f1-1')
+     yield 10;  // {value : 10, done : false}
+     console.log('f1-2')
+     yield 20; // {value : 20, done : false}
+     console.log('f1-3')
+     yield "finished"; // {value : finished, done : true} 마지막에는 done이 true
+   }
+
+   const gen = f1();
+   console.log(gen.next()); 
+  ```
+
  # Redux-saga 
   ```javascript
   import {all,call,put,takeLeading} from 'redux-saga/effects';
