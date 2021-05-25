@@ -164,3 +164,7 @@ return(
  sagaMiddleware.run(rootSaga); // 미들웨어 실행
 
   ```
+
+ # Debounce(디바운스) 
+  - 같은 함수가 연속으로 호출될 떄 첫번째 또는 마지막 호출만 실행하는 기능
+  - debounce(무시할 시간, action, 실행함수)
