@@ -100,3 +100,49 @@ return(
  - 제너레이터 활용
  - 테스트코드 작성 용이
 
+ # Redux-saga 
+  ```javascript
+  import {all,call,put,takeLeading} from 'redux-saga/effects';
+  import {actions,types} from "./index"; // 내가 지정한 액션과 타입
+  import {callApiLike} from "../../commom/api"; // API 호출 함수
+
+/*
+  최초 로딩 후 id의 값을 하나 증가하고 API를 호출하며 API 호출이 끝나면 로딩 해제
+*/
+  export function* fetchData(action){
+    yield put(actions.setLoading(true)) // put : 리덕스 액션 발생 
+    yield put(actions.addLike(action.timeline.id,1)) 
+    yield call(callApiLike) // 함수 실행
+    yield put(actions.setLoading(false))
+  }
+
+  export default function* (){
+    yield all([takeLeading(types.REQUEST_LIKE,fetchData)]);
+    // all 과 takeLeading은 Redux-saga에서 지원해주는 함수
+    // takeLeading 가장 최초로 처리중인것에 우선순위를 두고 액션을 처리한다. (후에 진행되는 액션은 무시한다) <-> takeLatest
+    // REQUEST_LIKE(사용자 지정 액션)이 발생했을때 두번쨰 매개변수의 함수를 실행한다. 
+  }
+  ```
+
+  Redux-saga store
+  ``` javascript
+  import {createStore,combineReducers,compose,applyMiddleware} from 'redux'
+  import {all} from "redux-saga/effects";
+  import createSagaMiddleware from "redux-saga";
+  
+  const sagaMiddleware = createSagaMiddleware();
+
+  const composeEnhancers = window._REDUX_DEVTOOLS_ETENSION_COMPOSE__ || compose;
+  
+  const store = createStore(
+   reducer,
+   composeEnhancers(applyMiddleware(sagaMiddleware)),
+ )
+
+ function* rootSaga(){
+   yield all([timelineSaga(),middleware2,....]);
+ }
+
+ sagaMiddleware.run(rootSaga); // 미들웨어 실행
+
+  ```
